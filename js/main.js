@@ -93,4 +93,5 @@ function boot() {
 
 const isMobile = () => window.matchMedia('(pointer: coarse)').matches;
 isMobile() ? initMobileInput($input) : initDesktopInput($input);
-boot();
+
+document.fonts.load("8px 'C64 Font'").finally(() => boot());
