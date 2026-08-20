@@ -3,7 +3,7 @@
 My personal website, built as a Commodore 64-style terminal.  
 Blog posts and projects are fetched from Supabase. No frameworks, just vanilla HTML/CSS/JS.
 
-[seziumm.github.io/C64](https://seziumm.github.io/C64/)
+[sezium.github.io/C64](https://sezium.github.io/C64/)
 
 ## Project Structure
 

@@ -29,6 +29,6 @@ staticCommand('ABOUT', 'WHO I AM', [
 
 staticCommand('CONTACT', 'HOW TO REACH ME', [
   '400 REM *** CONTACT ***', '',
-  'GITHUB   GITHUB.COM/SEZIUMM',
-  'EMAIL    SEZIUMWORK@GMAIL.COM',
+  'GITHUB   GITHUB.COM/SEZIUM',
+  'EMAIL    SSEZIUM@PROTON.ME',
 ]);
