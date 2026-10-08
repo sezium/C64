@@ -13,7 +13,7 @@
  * @param {string}   opts.header        first line printed (e.g. '100 REM …')
  * @param {Function} opts.fetch         async () => item[]
  * @param {Function} opts.renderRow     (n: number, item: object) => string
- * @param {string}   opts.prompt        prompt shown after the list
+ * @param {string}   opts.prompt        prompt shown after the list; the cursor stays on its row
  * @param {Function} opts.renderDetail  async (item: object) => void
  */
 function pickerCommand(name, desc, { header, fetch, renderRow, prompt, renderDetail }) {
@@ -40,8 +40,8 @@ function pickerCommand(name, desc, { header, fetch, renderRow, prompt, renderDet
         await Terminal.aprint(line);
 
     await Terminal.aprint('');
-    await Terminal.aprint(prompt);
     await Terminal.flush();
+    Terminal.setPrompt(prompt + ' ');   // cursor stays on the prompt row
     Terminal.toBottom();
 
     Shell.use(() => true, async cmd => {
@@ -68,10 +68,8 @@ pickerCommand('PROJECTS', 'MY PROJECTS', {
   header: '100 REM *** PROJECTS ***',
   fetch:  () => DB.getProjects(),
   renderRow: (n, p) => `${n}. ${p.title.toUpperCase()}`,
-  prompt: 'READ PROJECT (ENTER NUMBER):',
+  prompt: 'INSERT NUMBER',
   renderDetail: async p => {
-    await Terminal.aprint(p.title.toUpperCase());
-    await Terminal.aprint('');
     for (const line of p.description.split('\n'))
       await Terminal.aprint(line.toUpperCase());
     if (p.link) {
@@ -85,15 +83,14 @@ pickerCommand('BLOG', 'READ THE BLOG', {
   header: "500 REM *** SEZIUM'S BLOG ***",
   fetch:  () => DB.getPosts(),
   renderRow: (n, p) => `${n}. ${p.title.toUpperCase()}\n   ${p.date}`,
-  prompt: 'READ POST (ENTER NUMBER):',
+  prompt: 'INSERT NUMBER',
   renderDetail: async p => {
+      await Terminal.aprint('========================================');
+      await Terminal.aprint('');
     try {
-      await Terminal.aprint(p.title.toUpperCase());
-      await Terminal.aprint('');
-      await Terminal.aprint(p.date);
-      await Terminal.aprint('');
       for (const line of p.body.split('\n'))
         await Terminal.aprint(line.toUpperCase());
+      await Terminal.aprint(p.date);
       await Terminal.aprint('');
     } catch (e) {
       await Terminal.error(e);

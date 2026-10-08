@@ -9,12 +9,13 @@ const Terminal = (() => {
 
   let lines    = [];
   let typed    = '';
+  let prefix   = '';   // prompt text shown before the typed text on the same row
   let scrollY  = 0;
   let cursorOn = true;
 
   const $content = document.getElementById('screen-content');
 
-  const virtualLines = () => lines.concat([typed]);
+  const virtualLines = () => lines.concat([prefix + typed]);
   const maxScroll    = () => Math.max(0, virtualLines().length - ROWS);
   const clampScroll  = () => { scrollY = Math.max(0, Math.min(scrollY, maxScroll())); };
   const pushLine     = s  => lines.push(s);
@@ -153,7 +154,7 @@ const Terminal = (() => {
     },
 
     /** Clears the screen and resets all state. */
-    clear() { lines = []; scrollY = 0; queue.length = 0; running = false; },
+    clear() { lines = []; prefix = ''; scrollY = 0; queue.length = 0; running = false; },
 
     /**
      * Updates the typed (input) line and re-renders.
@@ -162,8 +163,17 @@ const Terminal = (() => {
      */
     setTyped(t) { typed = t; jumpToBottom(); },
 
-    /** Commits the current typed line into the permanent buffer. */
-    commit() { wrap(typed).forEach(pushLine); typed = ''; },
+    /**
+     * Sets a prompt printed on the same row as the typed text, so the
+     * cursor stays right after it instead of moving to a new row.
+     * Cleared automatically on commit(). Call it when the print queue is empty.
+     *
+     * @param {string} p  e.g. 'READ PROJECT (ENTER NUMBER): '
+     */
+    setPrompt(p) { prefix = p; jumpToBottom(); },
+
+    /** Commits the current line (prompt + typed text) into the permanent buffer. */
+    commit() { wrap(prefix + typed).forEach(pushLine); prefix = ''; typed = ''; },
 
     /** Scrolls up by one row. */
     scrollUp()   { scrollY = Math.max(0, scrollY - 1); render(); },

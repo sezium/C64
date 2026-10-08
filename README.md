@@ -1,7 +1,7 @@
 # C64 Terminal Portfolio
 
 My personal website, built as a Commodore 64-style terminal.  
-Blog posts and projects are fetched from Supabase. No frameworks, just vanilla HTML/CSS/JS.
+Blog posts and projects are loaded from a local data file (`data/db.js`). No frameworks, just vanilla HTML/CSS/JS.
 
 [sezium.github.io/C64](https://sezium.github.io/C64/)
 
@@ -9,6 +9,8 @@ Blog posts and projects are fetched from Supabase. No frameworks, just vanilla H
 
 ```
 ├── index.html
+├── data/
+│   └── db.js                 # Projects and blog posts
 ├── css/
 │   ├── font.css              # C64 bitmap font face
 │   └── palette.css           # C64 16-color palette as CSS variables
@@ -20,7 +22,7 @@ Blog posts and projects are fetched from Supabase. No frameworks, just vanilla H
     │   ├── terminal.js       # Screen rendering & print queue
     │   └── shell.js          # Command registry & middleware
     ├── api/
-    │   └── supabase.js       # Supabase REST client
+    │   └── mock.js           # Local data client (reads data/db.js)
     ├── commands/
     │   ├── static.js         # Hardcoded commands (ABOUT, CONTACT)
     │   └── dynamic.js        # Data-driven commands (PROJECTS, BLOG)
@@ -38,3 +40,7 @@ Blog posts and projects are fetched from Supabase. No frameworks, just vanilla H
 - `PROJECTS` — browse my projects, pick one by number to read it
 - `BLOG` — list of blog posts, pick one by number to read it
 - `CLEAR` — clear the screen
+
+## Editing content
+
+Edit `data/db.js`. No server or fetch is needed: `index.html` works even when opened directly from disk.
