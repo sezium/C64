@@ -12,8 +12,8 @@
 * {
   color: var(--c64-light-blue);
   font-family: 'C64 Font', monospace;
-  font-size: 8px;
-  line-height: 1;
+  font-size: min(2.3vw, 3.067dvh);
+  line-height: 1.2;
 }
 
 body {
@@ -22,23 +22,23 @@ body {
   background: var(--c64-black);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
   overscroll-behavior: none;
   user-select: none;
 }
 
 .screen-border {
   background: var(--c64-light-blue);
-  padding: 36px 32px;
+  padding: 4dvh 4vw;
   position: relative;
-  zoom: var(--terminal-zoom, 1);
   touch-action: none;
 }
 
 #screen {
-  width: 320px;
-  height: 200px;
+  width: min(92vw, 122.667dvh);
+  aspect-ratio: 4 / 3;
   background: var(--c64-blue);
   box-sizing: border-box;
   position: relative;
@@ -92,8 +92,8 @@ body {
   background: var(--c64-light-blue);
   color: var(--c64-blue);
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 1em;
+  height: 1em;
   vertical-align: text-top;
 }
 .cursor-char--hidden {
